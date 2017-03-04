@@ -9,6 +9,7 @@ import scrapy
 
 
 class MarketstatItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    name = scrapy.Field()
+    expected_value = scrapy.Field()
+    preliminary_value = scrapy.Field()
+    confirmed_value = scrapy.Field()

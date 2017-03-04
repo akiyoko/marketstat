@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 
 # Scrapy settings for marketstat project
 #
@@ -27,7 +28,7 @@ ROBOTSTXT_OBEY = True
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -88,3 +89,25 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+##################
+# LOCAL SETTINGS #
+##################
+PROJECT_APP_PATH = os.path.dirname(os.path.abspath(__file__))
+PROJECT_APP = os.path.basename(PROJECT_APP_PATH)
+f = os.path.join(PROJECT_APP_PATH, 'local_settings.py')
+if os.path.exists(f):
+    import sys
+    import imp
+    module_name = 'local_settings'
+    module = imp.new_module(module_name)
+    module.__file__ = f
+    sys.modules[module_name] = module
+    exec (open(f, 'rb').read())
+
+###############
+# OUTPUT FILE #
+###############
+FEED_FORMAT = 'csv'
+# FEED_URI = '/Users/akiyoko/tmp/%(date)s.csv'
+FEED_URI = 's3://marketstat/%(name)s/%(date)s.csv'
