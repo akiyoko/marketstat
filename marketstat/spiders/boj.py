@@ -26,6 +26,7 @@ class BojSpider(scrapy.Spider):
     def parse(self, response):
         for sel in response.css('table tr'):
             item = MarketstatItem()
+            item['date'] = self.date
             item['name'] = sel.css('td::text').extract_first()
             item['expected_value'] = sel.css('td:nth-last-child(3)::text').extract_first()
             item['preliminary_value'] = sel.css('td:nth-last-child(2)::text').extract_first()

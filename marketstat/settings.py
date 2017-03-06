@@ -109,5 +109,5 @@ if os.path.exists(f):
 # OUTPUT FILE #
 ###############
 FEED_FORMAT = 'csv'
-# FEED_URI = '/Users/akiyoko/tmp/%(date)s.csv'
+# FEED_URI = '%(date)s.csv'
 FEED_URI = 's3://marketstat/%(name)s/%(date)s.csv'
