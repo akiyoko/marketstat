@@ -28,7 +28,14 @@ class BojSpider(scrapy.Spider):
             item = MarketstatItem()
             item['date'] = self.date
             item['name'] = sel.css('td::text').extract_first()
-            item['expected_value'] = sel.css('td:nth-last-child(3)::text').extract_first()
-            item['preliminary_value'] = sel.css('td:nth-last-child(2)::text').extract_first()
-            item['confirmed_value'] = sel.css('td:nth-last-child(1)::text').extract_first()
+            item['expected_value'] = remove_comma(sel.css('td:nth-last-child(3)::text').extract_first())
+            item['preliminary_value'] = remove_comma(sel.css('td:nth-last-child(2)::text').extract_first())
+            item['confirmed_value'] = remove_comma(sel.css('td:nth-last-child(1)::text').extract_first())
             yield item
+
+
+def remove_comma(val):
+    """Remove comma if exists"""
+    if isinstance(val, basestring):
+        return val.replace(',', '')
+    return val
