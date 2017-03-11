@@ -10,7 +10,10 @@ from ..items import MarketstatItem
 class BojSpider(scrapy.Spider):
     name = "boj"
     allowed_domains = ["www3.boj.or.jp"]
-    date = datetime.now(timezone('Asia/Tokyo')).strftime('%y%m%d')
+    now = datetime.now(timezone('Asia/Tokyo'))
+    date = now.strftime('%y%m%d')  # e.g.: 170301
+    year = now.strftime('%Y')  # e.g.: 2017
+    month = now.strftime('%m')  # e.g.: 03
     start_urls = [
         'http://www3.boj.or.jp/market/jp/stat/jx{date}.htm'.format(date=date),
     ]
@@ -18,7 +21,10 @@ class BojSpider(scrapy.Spider):
     def __init__(self, date=None, *args, **kwargs):
         super(BojSpider, self).__init__(*args, **kwargs)
         if date is not None:
-            self.date = date
+            date = datetime.strptime(date, '%y%m%d')
+            self.date = date.strftime('%y%m%d')
+            self.year = date.strftime('%Y')
+            self.month = date.strftime('%m')
             self.start_urls = [
                 'http://www3.boj.or.jp/market/jp/stat/jx{date}.htm'.format(date=self.date),
             ]

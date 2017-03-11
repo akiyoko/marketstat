@@ -110,4 +110,4 @@ if os.path.exists(f):
 ###############
 FEED_FORMAT = 'csv'
 # FEED_URI = '%(date)s.csv'
-FEED_URI = 's3://marketstat/%(name)s/%(date)s.csv'
+FEED_URI = 's3://marketstat/%(name)s/year=%(year)s/month=%(month)s/%(date)s.csv'
